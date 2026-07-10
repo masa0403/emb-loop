@@ -3,7 +3,7 @@ requires = ["setuptools>=61"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "emb"
+name = "emb-loop"
 version = "0.1.0a1"
 description = "Embedded CLI toolkit"
 readme = "README.md"
