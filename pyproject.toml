@@ -1,0 +1,35 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "emb"
+version = "0.1.0a1"
+description = "Embedded CLI toolkit"
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+
+authors = [
+    {name = "masa0403"}
+]
+
+dependencies = [
+    "PyYAML"
+]
+
+[project.scripts]
+emb = "emb.__main__:main"
+
+[tool.setuptools]
+include-package-data = true
+
+[tool.setuptools.packages.find]
+where = ["."]
+
+[tool.setuptools.package-data]
+emb = [
+    "boards/**/*.yaml",
+    "firmware/**/*",
+    "examples/**/*",
+]

@@ -1,0 +1,3 @@
+recursive-include emb/boards *.yaml
+recursive-include emb/firmware *
+recursive-include emb/examples *
