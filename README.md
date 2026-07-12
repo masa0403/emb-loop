@@ -14,4 +14,4 @@ pip install emb-loop
 
 
 ## Usage
-emb flash attiny202 examples/attiny202/blink.c COM3
+emb attiny202 examples/attiny202/blink.c COM3
