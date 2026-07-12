@@ -1,75 +1,67 @@
 import subprocess
-from emb.path import LOGS
+from datetime import datetime
+from pathlib import Path
+from emb.path import PACKAGE
+
+# logs/ のルート
+LOGS = PACKAGE.parent / "logs"
+
+# ------------------------------------------------------------
+# ログファイルのパスを生成（マイコン名ごとにフォルダを作る）
+# ------------------------------------------------------------
+def create_log_file(mcu: str) -> Path:
+    # logs/attiny202/
+    mcu_dir = LOGS / mcu
+    mcu_dir.mkdir(parents=True, exist_ok=True)
+
+    # 日付＋時刻入りファイル名
+    timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+    return mcu_dir / f"{timestamp}.txt"
 
 
-def create_log_file():
-
-    LOGS.mkdir(parents=True, exist_ok=True)
-
-    nums = []
-
-    for f in LOGS.glob("*.txt"):
-        try:
-            nums.append(int(f.stem))
-        except ValueError:
-            pass
-
-    next_num = max(nums, default=0) + 1
-
-    return LOGS / f"{next_num:04d}.txt"
-
-# -----------------------------
-# 書き込み
-# -----------------------------
-def flash(
-        hex_file,
-        port,
-        toolchain
-    ):
-    print("Writing...")
-
-    log_file = create_log_file()
-
-    programmer = toolchain["programmer"]
-    baud = str(toolchain["baud"])
+# ------------------------------------------------------------
+# 書き込み（AVR 専用）
+# ------------------------------------------------------------
+def flash(hex_file, toolchain, mcu, port):
 
     avrdude = toolchain["avrdude"]
-    conf = toolchain["avrdude_conf"]
+    avrdude_conf = toolchain["avrdude_conf"]
+    programmer = "jtag2updi"
+
+    print("Writing...")
+
+    # ログファイル生成
+    log_file = create_log_file(mcu)
+
+    # avrdude 実行（ログを取るため run() を使う）
     result = subprocess.run(
         [
             avrdude,
-            "-C",
-            conf,
-            "-v",
-            "-p",
-            toolchain["mcu"],
-            "-c",
-            programmer,
-            "-P",
-            port,
-            "-b",
-            baud,
-            "-U",
-            f"flash:w:{hex_file}:i"
+            "-C", avrdude_conf,
+            "-p", mcu,
+            "-c", programmer,
+            "-P", port,
+            "-U", f"flash:w:{hex_file}:i"
         ],
+        capture_output=True,
         text=True
     )
 
     # ログ保存
     with open(log_file, "w", encoding="utf-8") as f:
+        f.write("=== STDOUT ===\n")
+        f.write(result.stdout or "")
+        f.write("\n\n=== STDERR ===\n")
+        f.write(result.stderr or "")
 
-        if result.stdout:
-            f.write(result.stdout)
+    print(f"Log saved : {log_file}")
 
-        if result.stderr:
-            f.write(result.stderr)
-
+    # avrdude が失敗したら例外を投げる
     if result.returncode != 0:
+        print("Flash failed.")
         raise subprocess.CalledProcessError(
             result.returncode,
             result.args
         )
 
-    print(f"Log saved : {log_file}")
-    print("Done!")
-
+    print("Flashed!")

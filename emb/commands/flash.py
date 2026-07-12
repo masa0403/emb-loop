@@ -1,6 +1,6 @@
 from emb.backend.avr.compile import compile_source
 from emb.backend.avr.flash import flash
-from emb.backend.avr.toolchain import resolve_toolchain
+from emb.backend.avr.toolchain import resolve_avr_toolchain
 
 
 import sys
@@ -12,17 +12,19 @@ def main(args):
     port = args[2]
 
 
-    toolchain = resolve_toolchain(board)
+    toolchain = resolve_avr_toolchain(board)
 
 
     hex_file = compile_source(
         source,
-        toolchain
+        toolchain,
+        board
     )
 
 
     flash(
         hex_file,
-        port,
-        toolchain
+        toolchain,
+        board,
+        port
     )

@@ -1,6 +1,7 @@
 import sys
 
 from emb.commands.flash import main as flash_command
+from emb.commands.setup import main as setup_command
 
 SUPPORTED_BOARDS = {
     "attiny202",
@@ -19,8 +20,6 @@ def main():
 
     # setupだけは特別扱い
     if first == "setup":
-
-        from emb.commands.setup import main as setup_command
 
         setup_command(sys.argv[2:])
         return

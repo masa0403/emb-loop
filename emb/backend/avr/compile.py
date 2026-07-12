@@ -1,40 +1,39 @@
 from pathlib import Path
-from .toolchain import (
-    find_avr_gcc,
-    find_avr_objcopy
-)
 import subprocess
 from emb.path import BUILD, PACKAGE, EXAMPLES
 
 # -----------------------------
 # コンパイル
 # -----------------------------
-def compile_source(
-        source_file,
-        toolchain
-    ):
-
+def compile_source(source_file, toolchain, board):
     source = Path(source_file)
 
+    # 相対パスはカレントディレクトリ基準
     if not source.is_absolute():
+        source = Path.cwd() / source
 
-        candidates = [
-            PACKAGE / source,
-            EXAMPLES / source,
-            source,
-        ]
+    candidates = [
+        PACKAGE / source_file,
+        EXAMPLES / board / source_file,
+        EXAMPLES / source_file,
+        source,
+    ]
 
-        for c in candidates:
-            if c.exists():
-                source = c.resolve()
-                break
-        else:
-            raise FileNotFoundError(source_file)
+    for c in candidates:
+        if Path(c).exists():
+            source = Path(c).resolve()
+            break
+    else:
+        raise FileNotFoundError(source_file)
+
+    ...
+
 
     base = source.stem
     mcu = toolchain["mcu"]
-    gcc = toolchain["gcc"]
-    objcopy = toolchain["objcopy"]
+    gcc = toolchain["avr_gcc"]
+    objcopy = toolchain["avr_objcopy"]
+
 
     build_dir = BUILD
     build_dir.mkdir(exist_ok=True)
