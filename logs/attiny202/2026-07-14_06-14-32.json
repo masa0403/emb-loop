@@ -1,0 +1,7 @@
+{
+  "board": "attiny202",
+  "result": "fail",
+  "log": [
+    "PD7_LOW"
+  ]
+}

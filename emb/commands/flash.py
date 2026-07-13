@@ -28,7 +28,8 @@ def main(args):
 
     print("[flash] Flashed. Starting compilation of tester...")
 
-    tester_hex = compile_source(tester_source, resolve_avr_toolchain("nano"), "nano")
+    
+    tester_hex = compile_tester_firmware()
 
     print("[setup] Preparing Arduino Nano as Tester Logger...")
     print("\033[1m        Remove a 4.7µF–10µF capacitor between RST and GND.\033[0m")
@@ -40,4 +41,4 @@ def main(args):
     print("[setup] Auto Debugging Now...")
 
     run_tester_session(board, port)
-
+    

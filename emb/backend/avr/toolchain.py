@@ -80,6 +80,7 @@ def resolve_avr_toolchain(board: str):
     elif board == "nano":
         return {
             "mcu": "atmega328p",
+            "programmer": "arduino",
             "avr_gcc": "/usr/bin/avr-gcc",
             "avr_objcopy": "/usr/bin/avr-objcopy",
             "avrdude": "/usr/bin/avrdude",

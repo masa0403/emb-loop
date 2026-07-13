@@ -1,0 +1,11 @@
+{
+  "board": "attiny202",
+  "result": "pass",
+  "log": [
+    "LOG_START",
+    "D8_HIGH",
+    "PA2_HIGH",
+    "PA2_LOW",
+    "PA6_HIGH_END"
+  ]
+}
