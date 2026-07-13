@@ -36,7 +36,7 @@ def main(args):
         toolchain = resolve_avr_toolchain("attiny202")
 
         print("[setup] Preparing Arduino Nano as UPDI programmer...")
-        print("        Remove a 4.7µF–10µF capacitor between RST and GND.")
+        print("\033[1m        Remove a 4.7µF–10µF capacitor between RST and GND.\033[0m")
         input("        Press ENTER when ready...")
 
         install_jtag2updi(port="/dev/ttyUSB0", toolchain=toolchain)

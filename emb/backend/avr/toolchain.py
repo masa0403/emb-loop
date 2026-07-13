@@ -50,26 +50,41 @@ def install_megatinycore():
 # ------------------------------------------------------------
 # AVR toolchain を解決（AVR専用）
 # ------------------------------------------------------------
-def resolve_avr_toolchain(mcu: str):
-    print(f"[toolchain] Resolving AVR toolchain for {mcu}...")
+def resolve_avr_toolchain(board: str):
+    print(f"[toolchain] Resolving AVR toolchain for {board}...")
 
-    # 1. DxCore toolchain が存在するか確認
-    if not DXCORE_TOOLS.exists():
-        print("[toolchain] DxCore toolchain not found.")
-        install_megatinycore()
+    # ------------------------------------------------------------
+    # ATtiny202 / tinyAVR 系 (DxCore)
+    # ------------------------------------------------------------
+    if board in ["attiny202", "attiny402", "attiny412", "attiny1614", "attiny3216"]:
+        if not DXCORE_TOOLS.exists():
+            print("[toolchain] DxCore toolchain not found.")
+            install_megatinycore()
 
-    # 2. avr-gcc / avrdude / avrdude.conf を探索
-    avr_gcc = find_file(DXCORE_TOOLS, "avr-gcc")
-    avr_objcopy = find_file(DXCORE_TOOLS, "avr-objcopy")
-    avrdude = find_file(DXCORE_TOOLS, "avrdude")
-    avrdude_conf = find_file(DXCORE_TOOLS, "avrdude.conf")
+        avr_gcc = find_file(DXCORE_TOOLS, "avr-gcc")
+        avr_objcopy = find_file(DXCORE_TOOLS, "avr-objcopy")
+        avrdude = find_file(DXCORE_TOOLS, "avrdude")
+        avrdude_conf = find_file(DXCORE_TOOLS, "avrdude.conf")
 
-    print("[toolchain] AVR toolchain resolved.")
+        return {
+            "mcu": board,
+            "avr_gcc": avr_gcc,
+            "avr_objcopy": avr_objcopy,
+            "avrdude": avrdude,
+            "avrdude_conf": avrdude_conf
+        }
 
-    return {
-        "mcu": mcu,
-        "avr_gcc": avr_gcc,
-        "avr_objcopy": avr_objcopy,
-        "avrdude": avrdude,
-        "avrdude_conf": avrdude_conf
-    }
+    # ------------------------------------------------------------
+    # Arduino Nano (ATmega328P)
+    # ------------------------------------------------------------
+    elif board == "nano":
+        return {
+            "mcu": "atmega328p",
+            "avr_gcc": "/usr/bin/avr-gcc",
+            "avr_objcopy": "/usr/bin/avr-objcopy",
+            "avrdude": "/usr/bin/avrdude",
+            "avrdude_conf": "/etc/avrdude.conf"
+        }
+
+    else:
+        raise ValueError(f"Unknown board: {board}")
