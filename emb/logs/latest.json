@@ -9,20 +9,21 @@
         },
         {
             "seq": 1,
-            "time_us": 4111660,
+            "time_us": 4010304,
             "pin": "ATtiny202.PA2",
-            "type": "FALL"
-        },
-        {
-            "seq": 2,
-            "time_us": 4155984,
-            "pin": "ATtiny202.PA3",
             "type": "RISE"
         },
         {
+            "seq": 2,
+            "time_us": 4010312,
+            "pin": "ATtiny202.PA2",
+            "type": "PWM",
+            "value": 50
+        },
+        {
             "seq": 3,
-            "time_us": 6579256,
-            "pin": "ATtiny202.PA3",
+            "time_us": 4115764,
+            "pin": "ATtiny202.PA2",
             "type": "FALL"
         }
     ],

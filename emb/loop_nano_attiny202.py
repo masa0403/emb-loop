@@ -29,15 +29,6 @@ def generate_testplan():
         "generate_testplan.py"
     ])
 
-def generate_expected():
-
-    print("[Step0-2] Generate expected.json")
-
-    run_command([
-        "python3",
-        "generate_expected.py"
-    ])
-
 def generate_nano_code():
 
     print("[Step0-3] Generate test_plan.cpp")
@@ -54,8 +45,6 @@ def generate_nano_code():
 # ---------------------------------------------------------
 
 generate_testplan()
-
-generate_expected()
 
 generate_nano_code()
 

@@ -13,6 +13,8 @@ public:
 
     void log(const char* pinName,EventType type);
 
+    void logPWM(const char* pin,uint16_t duty);
+
     bool getEvent(PinEvent& event);
 
 private:

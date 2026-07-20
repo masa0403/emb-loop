@@ -25,9 +25,28 @@ def save_latest_json(logs, filename="logs/latest.json"):
 
 
         match = re.match(
-            r"(\d+),(\d+),([^,]+),(RISE|FALL)",
+            r"(\d+),(\d+),([^,]+),(RISE|FALL)$",
             line
         )
+
+        pwm_match = re.match(
+            r"(\d+),(\d+),([^,]+),PWM,(\d+)$",
+            line
+        )
+
+        if pwm_match:
+
+            events.append(
+                {
+                    "seq": int(pwm_match.group(1)),
+                    "time_us": int(pwm_match.group(2)),
+                    "pin": pwm_match.group(3),
+                    "type": "PWM",
+                    "value": int(pwm_match.group(4))
+                }
+            )
+
+            continue
 
 
         if match:

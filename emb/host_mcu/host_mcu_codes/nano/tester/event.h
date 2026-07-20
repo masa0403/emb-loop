@@ -3,10 +3,16 @@
 
 #include <Arduino.h>
 
-enum EventType : uint8_t
+#pragma once
+
+#include <stdint.h>
+
+enum EventType
 {
-    EVENT_RISE = 0,
-    EVENT_FALL = 1
+    EVENT_RISE,
+    EVENT_FALL,
+
+    EVENT_PWM
 };
 
 struct PinEvent
@@ -18,6 +24,7 @@ struct PinEvent
     const char* pinName;
 
     EventType type;
-};
 
+    uint16_t value;
+};
 #endif

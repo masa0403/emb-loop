@@ -16,12 +16,26 @@ void EventFormatter::print(const PinEvent& event)
 
     Serial.print(',');
 
-    if(event.type == EVENT_RISE)
+    switch(event.type)
     {
+    case EVENT_RISE:
+
         Serial.println("RISE");
-    }
-    else
-    {
+
+        break;
+
+    case EVENT_FALL:
+
         Serial.println("FALL");
+
+        break;
+
+    case EVENT_PWM:
+
+        Serial.print("PWM,");
+
+        Serial.println(event.value);
+
+        break;
     }
 }

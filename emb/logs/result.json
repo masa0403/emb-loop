@@ -1,7 +1,7 @@
 {
     "status": "PASS",
-    "expected_count": 4,
-    "actual_count": 4,
+    "expected_count": 2,
+    "actual_count": 2,
     "missing": [],
     "extra": []
 }

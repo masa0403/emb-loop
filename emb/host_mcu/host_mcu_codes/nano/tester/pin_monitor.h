@@ -12,10 +12,25 @@ public:
 
     void update();
 
+
 private:
+
     uint8_t pin;
+
     const char* name;
+
     uint8_t lastState;
+
+    uint16_t pwmValue = 0;
+
+    uint32_t lastRise;
+
+    bool pwmActive;
+
+        uint32_t riseTime = 0;
+    uint32_t lastPeriodStart = 0;
+
+    void detectPWM(uint8_t currentState);
 };
 
 #endif

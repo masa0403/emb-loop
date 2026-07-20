@@ -62,19 +62,13 @@ def compare():
     request = load_json(TEST_REQUEST_JSON)
     expected_events = request["expected_events"]
 
+    actual_events = []
 
-    # 現在はlatest.jsonが
-    # ATtiny202.PA2形式なので
-    # hardware変換は不要
-    actual_events=[]
-
-
-    for event in expected_events:
+    for event in latest["events"]:
 
         actual_events.append(
             normalize_event(event)
         )
-
 
     missing=[]
 

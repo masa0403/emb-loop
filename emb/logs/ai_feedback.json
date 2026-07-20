@@ -33,8 +33,8 @@
                 "name": "ATtiny202"
             },
             "test": {
-                "name": "PA2 PA3 tracking",
-                "description": "PA3 should always follow PA2."
+                "name": "PA3 PWM fade-in",
+                "description": "When PA2 becomes HIGH, PA3 shall fade from 0% to 100% duty in one second and remain HIGH."
             },
             "expected_events": [
                 {
@@ -44,14 +44,6 @@
                 {
                     "pin": "ATtiny202.PA3",
                     "type": "RISE"
-                },
-                {
-                    "pin": "ATtiny202.PA2",
-                    "type": "FALL"
-                },
-                {
-                    "pin": "ATtiny202.PA3",
-                    "type": "FALL"
                 }
             ]
         },
@@ -82,8 +74,8 @@
     },
     "evaluation": {
         "status": "PASS",
-        "expected_events": 4,
-        "actual_events": 4
+        "expected_events": 2,
+        "actual_events": 2
     },
     "failure_analysis": {
         "missing_events": [],
