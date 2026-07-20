@@ -3,26 +3,26 @@
     "events": [
         {
             "seq": 0,
-            "time_us": 4010288,
+            "time_us": 4010292,
             "pin": "ATtiny202.PA2",
             "type": "RISE"
         },
         {
             "seq": 1,
-            "time_us": 4010308,
-            "pin": "ATtiny202.PA6",
-            "type": "RISE"
-        },
-        {
-            "seq": 2,
-            "time_us": 4112680,
+            "time_us": 4111660,
             "pin": "ATtiny202.PA2",
             "type": "FALL"
         },
         {
+            "seq": 2,
+            "time_us": 4155984,
+            "pin": "ATtiny202.PA3",
+            "type": "RISE"
+        },
+        {
             "seq": 3,
-            "time_us": 4112700,
-            "pin": "ATtiny202.PA6",
+            "time_us": 6579256,
+            "pin": "ATtiny202.PA3",
             "type": "FALL"
         }
     ],

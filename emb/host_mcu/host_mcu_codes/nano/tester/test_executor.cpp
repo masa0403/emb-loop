@@ -2,6 +2,8 @@
 
 #include "test_plan.h"
 
+#include "generated_config.h"
+
 TestExecutor testExecutor;
 
 void TestExecutor::begin()
@@ -10,11 +12,11 @@ void TestExecutor::begin()
 
     waitingDelay = false;
 
-    pinMode(7, OUTPUT);
-    pinMode(8, OUTPUT);
-
-    digitalWrite(7, LOW);
-    digitalWrite(8, LOW);
+    for (int i = 0; i < OUTPUT_PIN_COUNT; i++)
+    {
+        pinMode(OUTPUT_PINS[i], OUTPUT);
+        digitalWrite(OUTPUT_PINS[i], LOW);
+    }
 }
 
 void TestExecutor::update()

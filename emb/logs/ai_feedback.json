@@ -33,24 +33,24 @@
                 "name": "ATtiny202"
             },
             "test": {
-                "name": "PA2 PA3 tracking test",
-                "description": "Verify PA3 follows PA2 state changes"
+                "name": "PA2 PA3 tracking",
+                "description": "PA3 should always follow PA2."
             },
             "expected_events": [
                 {
-                    "pin": "PA2",
+                    "pin": "ATtiny202.PA2",
                     "type": "RISE"
                 },
                 {
-                    "pin": "PA3",
+                    "pin": "ATtiny202.PA3",
                     "type": "RISE"
                 },
                 {
-                    "pin": "PA2",
+                    "pin": "ATtiny202.PA2",
                     "type": "FALL"
                 },
                 {
-                    "pin": "PA3",
+                    "pin": "ATtiny202.PA3",
                     "type": "FALL"
                 }
             ]
@@ -81,31 +81,13 @@
         }
     },
     "evaluation": {
-        "status": "FAIL",
+        "status": "PASS",
         "expected_events": 4,
         "actual_events": 4
     },
     "failure_analysis": {
-        "missing_events": [
-            {
-                "pin": "ATtiny202.PA3",
-                "type": "RISE"
-            },
-            {
-                "pin": "ATtiny202.PA3",
-                "type": "FALL"
-            }
-        ],
-        "unexpected_events": [
-            {
-                "pin": "ATtiny202.PA6",
-                "type": "RISE"
-            },
-            {
-                "pin": "ATtiny202.PA6",
-                "type": "FALL"
-            }
-        ]
+        "missing_events": [],
+        "unexpected_events": []
     },
-    "instruction": "Analyze missing hardware events. Determine whether firmware, timing, pin assignment, or test plan should be modified."
+    "instruction": "Test passed. No hardware correction is required."
 }

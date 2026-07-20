@@ -1,40 +1,25 @@
 #include <avr/io.h>
 
-#define F_CPU 20000000UL
-
 int main(void)
 {
-    /*
-        PA2 : input
-        PA6 : output
-    */
+    // PA2 output
+    PORTA.DIRSET = PIN2_bm;
 
-    // PA6 output
-    PORTA.DIRSET = PIN6_bm;
+    // PA3 output
+    PORTA.DIRSET = PIN3_bm;
 
-    // PA2 input
-    PORTA.DIRCLR = PIN2_bm;
-
-
-    while(1)
+    while (1)
     {
+        // HIGH
+        PORTA.OUTSET = PIN2_bm;
+        PORTA.OUTSET = PIN3_bm;
 
-        /*
-            PA2 HIGHならPA6 HIGH
-            PA2 LOWならPA6 LOW
-        */
+        for (volatile uint32_t i = 0; i < 200000; i++);
 
-        if(PORTA.IN & PIN2_bm)
-        {
-            PORTA.OUTSET = PIN6_bm;
-        }
-        else
-        {
-            PORTA.OUTCLR = PIN6_bm;
-        }
+        // LOW
+        PORTA.OUTCLR = PIN2_bm;
+        PORTA.OUTCLR = PIN3_bm;
 
+        for (volatile uint32_t i = 0; i < 200000; i++);
     }
-
-
-    return 0;
 }

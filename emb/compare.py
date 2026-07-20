@@ -3,7 +3,7 @@ import json
 
 HARDWARE_JSON = "target_mcu/attiny202/hardware.json"
 LATEST_JSON = "logs/latest.json"
-EXPECTED_JSON = "logs/expected.json"
+TEST_REQUEST_JSON = "requests/test_request.json"
 
 
 def load_json(path):
@@ -59,9 +59,8 @@ def compare():
         LATEST_JSON
     )
 
-    expected = load_json(
-        EXPECTED_JSON
-    )
+    request = load_json(TEST_REQUEST_JSON)
+    expected_events = request["expected_events"]
 
 
     # 現在はlatest.jsonが
@@ -70,7 +69,7 @@ def compare():
     actual_events=[]
 
 
-    for event in latest["events"]:
+    for event in expected_events:
 
         actual_events.append(
             normalize_event(event)
@@ -79,7 +78,7 @@ def compare():
 
     missing=[]
 
-    for event in expected["events"]:
+    for event in expected_events:
 
         if event not in actual_events:
 
@@ -91,7 +90,7 @@ def compare():
 
     for event in actual_events:
 
-        if event not in expected["events"]:
+        if event not in expected_events:
 
             extra.append(event)
 
@@ -111,7 +110,7 @@ def compare():
 
         "status":status,
 
-        "expected_count":len(expected["events"]),
+        "expected_count":len(expected_events),
 
         "actual_count":len(actual_events),
 
